@@ -1,0 +1,75 @@
+﻿@model BookType
+@{
+    string action = string.Empty;
+    if (Model == null)
+    {
+        action = "CreateBook";
+        ViewData["Title"] = "Create Books";
+    }
+    else
+    {
+        action = "UpdateBook";
+        ViewData["Title"] = "Update Book";
+    }
+}
+
+
+<form method="post" asp-action="@action">
+    <div class="border p-3 mt-5">
+        <div class="row pb-2">
+            <h1 class="text-primary">@ViewData["Title"]</h1>
+            <hr />
+        </div>
+       @* <div asp-validation-summary="All" class="text-danger"></div>*@
+       @if(Model != null)
+       {
+            <input asp-for="Id" type="hidden" />
+       }
+        <div class="mb-2">
+            <label asp-for="Title"></label>
+            <input class="form-control" asp-for="Title" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="mb-2">
+            <label asp-for="Author"></label>
+            <input class="form-control" asp-for="Author" />
+            <span asp-validation-for="Author" class="text-danger"></span>
+        </div>
+        <div class="mb-2">
+            <label asp-for="covertype"></label>
+            <select class="form-control" asp-for="covertype">
+                <option value="HARD">Hard</option>
+                <option value="SOFT">Soft</option>
+            </select>
+            <span asp-validation-for="covertype" class="text-danger"></span>
+        </div>
+        <div class="mb-2">
+            <label asp-for="ISBN"></label>
+            <input class="form-control" asp-for="ISBN" />
+            <span asp-validation-for="ISBN" class="text-danger"></span>
+        </div>
+         <div class="mb-2">
+            <label asp-for="unitprice"></label>
+            <input class="form-control" asp-for="unitprice" />
+            <span asp-validation-for="unitprice" class="text-danger"></span>
+        </div>
+        <div class="mb-2">
+            <label asp-for="coverimage"></label>
+            <input type="file" class="form-control" asp-for="coverimage" />
+            <span asp-validation-for="coverimage" class="text-danger"></span>
+        </div>
+        
+        <div class="mb-2">
+             <button type="submit" class="btn btn-success" style="width:150px;"> @(Model == null ? "Create New" : "Update Book" )</button>
+                
+            <a asp-controller="Books" asp-action="Index" class="btn btn-secondary" style="width:150px;">View List</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        //call a partial view
+        <partial name="_ValidationScriptsPartial"/> //Jquery Validation script for asp.net
+    }
+}
